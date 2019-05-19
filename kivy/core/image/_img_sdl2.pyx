@@ -101,22 +101,9 @@ def save(filename, w, h, pixelfmt, pixels, flipped, imagefmt, quality=90):
         image = SDL_CreateRGBSurfaceFrom(
             c_pixels, w, h, 24, pitch,
             0x0000ff, 0x00ff00, 0xff0000, 0)
-
-    if c_filename is not None:
-        if imagefmt == "png":
-            IMG_SavePNG(image, c_filename)
-        elif imagefmt == "jpg":
-            IMG_SaveJPG(image, c_filename, quality)
-    else:
-        rwops = rwops_bridge_to_bytesio(filename)
-        if imagefmt == "png":
-            IMG_SavePNG_RW(image, rwops, 1)
-        elif imagefmt == "jpg":
-            IMG_SaveJPG_RW(image, rwops, 1, quality)
-        SDL_FreeRW(rwops)
-
-    if image:
-        SDL_FreeSurface(image)
+        
+    IMG_SavePNG(image, c_filename)
+    SDL_FreeSurface(image)
 
 # NOTE: This must be kept up to date with ImageData supported formats. If you
 # add support for converting/uploading (for example) ARGB, you must ensure
